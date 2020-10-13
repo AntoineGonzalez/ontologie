@@ -1,0 +1,12 @@
+less generate.csv 
+sed 1d generate.csv | head
+sed '1d; s/;/ /g' generate.csv | head
+sed '1d; s/;/ /g' generate.csv | while read line; do echo $line; done | head
+sed '1d; s/;/ /g' generate.csv | while read line; do set $(echo $line); echo $1 $2; done | head
+sed '1d; s/;/ /g' generate.csv | while read line; do set $(echo $line); echo ":cell$1$2 :hasCoordonneeX $0";" :hasCoordonneeY $1";" :hasNorth ":cell$3"; done | head
+sed '1d; s/;/ /g' generate.csv | while read line; do set $(echo $line); echo ":cell$1$2" :hasCoordonneeX $1";" :hasCoordonneeY $2";" :hasNorth ":cell$3"; done | head
+sed '1d; s/;/ /g' generate.csv | while read line; do set $(echo $line); echo ":cell$1$2" :hasCoordonneeX $1";" :hasCoordonneeY $2";" :hasNorth ":cell$3"; done | sed 's/cellwall/wall/g'
+sed '1d; s/;/ /g' generate.csv | while read line; do set $(echo $line); echo ":cell$1$2" :hasCoordonneeX $1";" :hasCoordonneeY $2";" :hasNorth ":cell$3"; done | sed 's/cellwall/wall/g' | head
+sed '1d; s/;/ /g' generate.csv | while read line; do set $(echo $line); echo ":cell$7 rdf:type owl:NamedIndividual , :Cell ;":hasNorth: $3";" :hasSouth: $4";" :hasWeast: $5";" :hasEast: $6";"  :hasCoordonneeX $1";" :hasCoordonneeY $2";" :hasNorth ":cell$3 ."; done | sed 's/cellwall/wall/g' | head
+
+$ sed '1d; s/;/ /g' generate.csv | while read line; do set $(echo $line); echo ":cell$7 rdf:type owl:NamedIndividual , :CellFree ;" :hasNorth :cell$3";" :hasSouth :cell$4";" :hasWeast :cell$5";" :hasEast :cell$6";"  :hasCoordonneeX $1";" :hasCoordonneeY $2"  ."; done | sed 's/cellwall/wall/g' > grid_generate.owl 
